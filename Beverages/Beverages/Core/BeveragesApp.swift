@@ -5,8 +5,6 @@ import SwiftData
 @main
 struct BeveragesApp: App {
     
-    @StateObject private var network = NetworkMonitor.shared
-    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             BeverageEntity.self,
@@ -22,9 +20,8 @@ struct BeveragesApp: App {
 
     var body: some Scene {
         WindowGroup {
-            let appContainer = AppContainer(context: sharedModelContainer.mainContext)
-            BeverageList(viewModel: BeverageListViewModel(beverageUseCase: appContainer.featchBeverageUseCase) )
-                .environmentObject(network)
+            let appContainer = AppContainer(container: sharedModelContainer)
+            BeverageList(viewModel: BeverageListViewModel(beverageUseCase: appContainer.fetchBeverageUseCase))
         }
     }
 }

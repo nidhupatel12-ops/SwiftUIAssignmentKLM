@@ -7,20 +7,18 @@ struct BeverageList: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                Group {
-                    if viewModel.isLoading {
-                        ProgressView()
-                    }else if viewModel.beverages.isEmpty && viewModel.networkError != nil {
-                        Text(viewModel.networkError?.errorDescription ?? "")
-                    }else {
-                        List(viewModel.beverages) { beverage in
-                            NavigationLink {
-                                BeverageDetailView(beverage: beverage)
-                            } label: {
-                                HStack{
-                                    BeverageListCell(beverage: beverage)
-                                }
+            Group {
+                if viewModel.isLoading {
+                    ProgressView()
+                }else if viewModel.beverages.isEmpty && viewModel.networkError != nil {
+                    Text(viewModel.networkError?.errorDescription ?? "")
+                }else {
+                    List(viewModel.beverages) { beverage in
+                        NavigationLink {
+                            BeverageDetailView(beverage: beverage)
+                        } label: {
+                            HStack{
+                                BeverageListCell(beverage: beverage)
                             }
                         }
                     }

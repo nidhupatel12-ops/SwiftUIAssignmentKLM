@@ -1,10 +1,3 @@
-//
-//  BeverageRepositoryTests.swift
-//  BeveragesTests
-//
-//  Created by 01HW2318083 on 02/02/26.
-//
-
 import XCTest
 import SwiftData
 @testable import Beverages
@@ -19,15 +12,14 @@ final class BeverageRepositoryTests: XCTestCase {
     private let apiRequest = APIRequest()
     
     override func setUpWithError() throws {
-         super.setUp()
+        super.setUp()
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         container = try ModelContainer(for: BeverageEntity.self, configurations: config)
         context = container.mainContext
         mockNetwork = MockNetworkMonitor()
-        repository = BeverageRepository(context: context, apiRequest: apiRequest)
+        repository = BeverageRepository(container: container, apiRequest: apiRequest,networkMonitor : mockNetwork)
     }
     
-   
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }

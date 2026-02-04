@@ -1,10 +1,3 @@
-//
-//  BeveragesUITestsLaunchTests.swift
-//  BeveragesUITests
-//
-//  Created by 01HW2318083 on 28/01/26.
-//
-
 import XCTest
 
 final class BeveragesUITestsLaunchTests: XCTestCase {

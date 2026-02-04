@@ -2,13 +2,12 @@
 import Foundation
 import SwiftData
 
-
 final class AppContainer {
     
-    let featchBeverageUseCase: BeverageListUseCase
-    init(context: ModelContext) {
+    let fetchBeverageUseCase: BeverageListUseCase
+    init(container: ModelContainer) {
         let apiRequest = APIRequest()
-        let beverageRepository = BeverageRepository(context: context, apiRequest: apiRequest)
-        self.featchBeverageUseCase = BeverageListUseCase(beverageRepository: beverageRepository)
+        let beverageRepository = BeverageRepository(container: container, apiRequest: apiRequest)
+        self.fetchBeverageUseCase = BeverageListUseCase(beverageRepository: beverageRepository)
     }
 }

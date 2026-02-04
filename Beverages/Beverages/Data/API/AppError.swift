@@ -3,13 +3,13 @@ import Foundation
 
 enum AppError: Error, Equatable {
     case serverError(Int)
-    case inavalidUrl
+    case invalidUrl
     case unknownError
     case noData
     
     var errorDescription: String? {
         switch self {
-        case .inavalidUrl:
+        case .invalidUrl:
             return "Invalid URL"
         case .unknownError :
             return "Unknown Error"

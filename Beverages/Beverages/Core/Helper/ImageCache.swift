@@ -1,21 +1,19 @@
 
 import UIKit
-import SwiftUI
 
 final class ImageCache {
     static let shared = ImageCache()
-    private init() {}
     private var cache = NSCache<NSURL, UIImage>()
     
-    func image(for url : NSURL) -> UIImage? {
+    func image(for url: NSURL) -> UIImage? {
         cache.object(forKey: url)
     }
     
-    func insert(_ image : UIImage, for url : NSURL) {
+    func insert(_ image: UIImage, for url: NSURL) {
         cache.setObject(image, forKey: url)
     }
     
-    func getImageURL(url : URL) async -> UIImage? {
+    func getImageURL(url: URL) async -> UIImage? {
         
         let nsURL = url as NSURL
     
