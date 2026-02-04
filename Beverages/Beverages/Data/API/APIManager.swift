@@ -10,7 +10,7 @@ public final class APIManager: APIManagerDelegate {
     
     public func networkGetRequest<T>(_ url: URL?, type: T.Type) async throws -> T where T : Decodable {
         guard let url = url else {
-            throw AppError.inavalidUrl
+            throw AppError.invalidUrl
         }
         
         var request = URLRequest(url: url)

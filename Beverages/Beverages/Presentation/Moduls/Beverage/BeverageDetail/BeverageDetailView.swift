@@ -22,11 +22,12 @@ struct BeverageDetailView: View {
                             ProgressView()
                         }
                     }.frame(width: geometry.size.width, height: geometry.size.height * 0.40)
-                    .clipped()
-                    .task(id : imageURL) {
-                        image = await ImageCache.shared.getImageURL(url: imageURL!)
-                    }
-                    
+                        .clipped()
+                        .task(id : imageURL) {
+                            if let imgUrl = imageURL {
+                                image = await ImageCache.shared.getImageURL(url: imgUrl)
+                            }
+                        }
                     VStack(alignment: .leading, spacing: 2) {
                         Text(beverage.wine)
                             .font(.title)

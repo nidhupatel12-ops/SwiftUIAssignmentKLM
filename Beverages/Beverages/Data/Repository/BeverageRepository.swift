@@ -3,40 +3,34 @@ import Foundation
 import SwiftUI
 import SwiftData
 
-class BeverageRepository : BeverageRepositoryProtocol {
+class BeverageRepository: BeverageRepositoryProtocol {
     
-    private let context: ModelContext
-    private let apiRequest : APIRequest
+    private let container: ModelContainer
+    private let apiRequest: APIRequest
+    private let networkMonitor: NetworkMonitorProtocol
     
-    
-    init(context: ModelContext, apiRequest: APIRequest) {
-        self.context = context
+    init(container: ModelContainer, apiRequest: APIRequest,
+         networkMonitor: NetworkMonitorProtocol = NetworkMonitor()) {
+        self.container = container
         self.apiRequest = apiRequest
+        self.networkMonitor = networkMonitor
     }
     
     func fetchBeverageList() async throws -> [BeverageDTO] {
-    
-        let descriptor = FetchDescriptor<BeverageEntity>(sortBy: [SortDescriptor(\.id)])
-        let localData = try context.fetch(descriptor)
-        
-        if NetworkMonitor.shared.isReachable {
+        let handler = BeveragesDataHandler(modelContainer: self.container)
+        let isConnected = await networkMonitor.isConnectedToInternet()
+        if isConnected {
             do {
                 let responceData = try await apiRequest.getBeverageList()
-                for obj in responceData {
-                    if let existing = localData.first(where: { $0.id == obj.id }) {
-                        existing.updateEntity(dto: obj)
-                    }else {
-                        context.insert(BeverageEntity(from: obj))
-                    }
-                }
-                try context.save()
+                try await handler.GetAndSave(dto: responceData)
                 return responceData
             }catch {
                 print("API Error")
                 throw AppError.noData
             }
         }else {
-            let beverageDTO : [BeverageDTO] = localData.map { beverageEntity in
+            let localData = try await handler.getLocalData()
+            let beverageDTO: [BeverageDTO] = localData.map { beverageEntity in
                 BeverageDTO(id: beverageEntity.id, winery: beverageEntity.winery, wine: beverageEntity.wine, location: beverageEntity.location, image: beverageEntity.image, rating: beverageEntity.rating)
             }
             return beverageDTO
