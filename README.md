@@ -1,5 +1,4 @@
-# SwiftUIAssignmentKLM
-**SwiftUI assignment with MVVM + Clean architecture**
+# SwiftUI assignment with MVVM + Clean architecture
 
 **What This Project Demonstrates**
 * SwifUI - Modern declarative Ul with state-driven updates
@@ -19,4 +18,3 @@ View → ViewModel → UseCase → Repository → API / SwiftData
 **Offline Strategy**
 * If internet is available → fetch from API
 * If internet is unavailable load data from SwiftData
-   
